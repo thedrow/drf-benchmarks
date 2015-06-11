@@ -1,0 +1,146 @@
+language: python
+
+sudo: false
+
+env:
+  - TOX_ENV=py26-drf3-django14
+  - TOX_ENV=py26-drf31-django14
+  - TOX_ENV=py26-drfmaster-django14
+  - TOX_ENV=py27-drf3-django14
+  - TOX_ENV=py27-drf31-django14
+  - TOX_ENV=py27-drfmaster-django14
+  - TOX_ENV=pypy-drf3-django14
+  - TOX_ENV=pypy-drf31-django14
+  - TOX_ENV=pypy-drfmaster-django14
+  - TOX_ENV=py26-drf3-django15
+  - TOX_ENV=py26-drf3-django16
+  - TOX_ENV=py26-drf31-django15
+  - TOX_ENV=py26-drf31-django16
+  - TOX_ENV=py26-drfmaster-django15
+  - TOX_ENV=py26-drfmaster-django16
+  - TOX_ENV=py27-drf3-django15
+  - TOX_ENV=py27-drf3-django16
+  - TOX_ENV=py27-drf31-django15
+  - TOX_ENV=py27-drf31-django16
+  - TOX_ENV=py27-drfmaster-django15
+  - TOX_ENV=py27-drfmaster-django16
+  - TOX_ENV=py32-drf3-django15
+  - TOX_ENV=py32-drf3-django16
+  - TOX_ENV=py32-drf31-django15
+  - TOX_ENV=py32-drf31-django16
+  - TOX_ENV=py32-drfmaster-django15
+  - TOX_ENV=py32-drfmaster-django16
+  - TOX_ENV=py33-drf3-django15
+  - TOX_ENV=py33-drf3-django16
+  - TOX_ENV=py33-drf31-django15
+  - TOX_ENV=py33-drf31-django16
+  - TOX_ENV=py33-drfmaster-django15
+  - TOX_ENV=py33-drfmaster-django16
+  - TOX_ENV=py34-drf3-django15
+  - TOX_ENV=py34-drf3-django16
+  - TOX_ENV=py34-drf31-django15
+  - TOX_ENV=py34-drf31-django16
+  - TOX_ENV=py34-drfmaster-django15
+  - TOX_ENV=py34-drfmaster-django16
+  - TOX_ENV=pypy-drf3-django15
+  - TOX_ENV=pypy-drf3-django16
+  - TOX_ENV=pypy-drf31-django15
+  - TOX_ENV=pypy-drf31-django16
+  - TOX_ENV=pypy-drfmaster-django15
+  - TOX_ENV=pypy-drfmaster-django16
+  - TOX_ENV=py27-drf3-django17
+  - TOX_ENV=py27-drf3-django18
+  - TOX_ENV=py27-drf3-djangomaster
+  - TOX_ENV=py27-drf31-django17
+  - TOX_ENV=py27-drf31-django18
+  - TOX_ENV=py27-drf31-djangomaster
+  - TOX_ENV=py27-drfmaster-django17
+  - TOX_ENV=py27-drfmaster-django18
+  - TOX_ENV=py27-drfmaster-djangomaster
+  - TOX_ENV=py32-drf3-django17
+  - TOX_ENV=py32-drf3-django18
+  - TOX_ENV=py32-drf3-djangomaster
+  - TOX_ENV=py32-drf31-django17
+  - TOX_ENV=py32-drf31-django18
+  - TOX_ENV=py32-drf31-djangomaster
+  - TOX_ENV=py32-drfmaster-django17
+  - TOX_ENV=py32-drfmaster-django18
+  - TOX_ENV=py32-drfmaster-djangomaster
+  - TOX_ENV=py33-drf3-django17
+  - TOX_ENV=py33-drf3-django18
+  - TOX_ENV=py33-drf3-djangomaster
+  - TOX_ENV=py33-drf31-django17
+  - TOX_ENV=py33-drf31-django18
+  - TOX_ENV=py33-drf31-djangomaster
+  - TOX_ENV=py33-drfmaster-django17
+  - TOX_ENV=py33-drfmaster-django18
+  - TOX_ENV=py33-drfmaster-djangomaster
+  - TOX_ENV=py34-drf3-django17
+  - TOX_ENV=py34-drf3-django18
+  - TOX_ENV=py34-drf3-djangomaster
+  - TOX_ENV=py34-drf31-django17
+  - TOX_ENV=py34-drf31-django18
+  - TOX_ENV=py34-drf31-djangomaster
+  - TOX_ENV=py34-drfmaster-django17
+  - TOX_ENV=py34-drfmaster-django18
+  - TOX_ENV=py34-drfmaster-djangomaster
+  - TOX_ENV=pypy-drf3-django17
+  - TOX_ENV=pypy-drf3-django18
+  - TOX_ENV=pypy-drf3-djangomaster
+  - TOX_ENV=pypy-drf31-django17
+  - TOX_ENV=pypy-drf31-django18
+  - TOX_ENV=pypy-drf31-djangomaster
+  - TOX_ENV=pypy-drfmaster-django17
+  - TOX_ENV=pypy-drfmaster-django18
+  - TOX_ENV=pypy-drfmaster-djangomaster
+
+
+matrix:
+  fast_finish: true
+  allow_failures:
+    - env: TOX_ENV=py26-drfmaster-django14
+    - env: TOX_ENV=py27-drfmaster-django14
+    - env: TOX_ENV=pypy-drfmaster-django14
+    - env: TOX_ENV=py26-drfmaster-django15
+    - env: TOX_ENV=py26-drfmaster-django16
+    - env: TOX_ENV=py27-drfmaster-django15
+    - env: TOX_ENV=py27-drfmaster-django16
+    - env: TOX_ENV=py32-drfmaster-django15
+    - env: TOX_ENV=py32-drfmaster-django16
+    - env: TOX_ENV=py33-drfmaster-django15
+    - env: TOX_ENV=py33-drfmaster-django16
+    - env: TOX_ENV=py34-drfmaster-django15
+    - env: TOX_ENV=py34-drfmaster-django16
+    - env: TOX_ENV=pypy-drfmaster-django15
+    - env: TOX_ENV=pypy-drfmaster-django16
+    - env: TOX_ENV=py27-drf3-djangomaster
+    - env: TOX_ENV=py27-drf31-djangomaster
+    - env: TOX_ENV=py27-drfmaster-django17
+    - env: TOX_ENV=py27-drfmaster-django18
+    - env: TOX_ENV=py27-drfmaster-djangomaster
+    - env: TOX_ENV=py32-drf3-djangomaster
+    - env: TOX_ENV=py32-drf31-djangomaster
+    - env: TOX_ENV=py32-drfmaster-django17
+    - env: TOX_ENV=py32-drfmaster-django18
+    - env: TOX_ENV=py32-drfmaster-djangomaster
+    - env: TOX_ENV=py33-drf3-djangomaster
+    - env: TOX_ENV=py33-drf31-djangomaster
+    - env: TOX_ENV=py33-drfmaster-django17
+    - env: TOX_ENV=py33-drfmaster-django18
+    - env: TOX_ENV=py33-drfmaster-djangomaster
+    - env: TOX_ENV=py34-drf3-djangomaster
+    - env: TOX_ENV=py34-drf31-djangomaster
+    - env: TOX_ENV=py34-drfmaster-django17
+    - env: TOX_ENV=py34-drfmaster-django18
+    - env: TOX_ENV=py34-drfmaster-djangomaster
+    - env: TOX_ENV=pypy-drf3-djangomaster
+    - env: TOX_ENV=pypy-drf31-djangomaster
+    - env: TOX_ENV=pypy-drfmaster-django17
+    - env: TOX_ENV=pypy-drfmaster-django18
+    - env: TOX_ENV=pypy-drfmaster-djangomaster
+
+install:
+  - pip install tox
+
+script:
+    - tox -e $TOX_ENV
