@@ -129,6 +129,7 @@ def test_nested_object_serialization(benchmark):
     warmup=True
 )
 @pytest.mark.parametrize("number_of_objects", range(2, 100))
+@pytest.mark.django_db
 def test_nested_object_list_serialization(number_of_objects, benchmark):
     nested_instance = RegularFieldsModel(**data)
     nested_instance.save()
