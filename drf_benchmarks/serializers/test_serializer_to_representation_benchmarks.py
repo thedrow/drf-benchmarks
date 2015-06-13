@@ -50,10 +50,6 @@ nested_data = {
     'fk': data
 }
 
-data_list = [data for _ in range(100)]
-
-data_list_with_nesting = [nested_data for _ in range(100)]
-
 
 class TestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -83,7 +79,7 @@ def test_object_serialization(benchmark):
 
     @benchmark
     def result():
-        serializer.to_representation(instance)
+        return serializer.to_representation(instance)
 
     assert result
 
