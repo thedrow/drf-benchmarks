@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
+import cProfile
 from datetime import datetime
 from decimal import Decimal
 import gc
@@ -70,28 +71,38 @@ class TestNestedSerializer(serializers.ModelSerializer):
 @pytest.mark.benchmark(
     group="ModelSerializer serialization",
     min_rounds=100,
+    max_time=120,
     warmup=True
 )
+@pytest.mark.django_db
 def test_object_serialization(benchmark):
     instance = RegularFieldsModel(**data)
+    instance.save()
     serializer = TestSerializer(instance=instance)
+    profiler = cProfile.Profile()
 
     @benchmark
     def result():
-        return serializer.to_representation(instance)
+        profiler.enable()
+        serializer.to_representation(instance)
+        profiler.disable()
 
-    assert result
+    profiler.create_stats()
+    profiler.print_stats(sort=1)
+    #assert result
 
 
 @pytest.mark.benchmark(
     group="ModelSerializer serialization",
     min_rounds=1000,
     disable_gc=True,
+    max_time=120,
     warmup=True
 )
 @pytest.mark.parametrize("number_of_objects", range(2, 100))
 def test_object_list_serialization(number_of_objects, benchmark):
-    instances_list = [RegularFieldsModel(**data) for _ in range(number_of_objects)]
+    instances_list = RegularFieldsModel.objects.bulk_create(
+        [RegularFieldsModel(**data) for _ in range(number_of_objects)])
     serializer = serializers.ListSerializer(child=TestSerializer(instance=instances_list))
 
     @benchmark
@@ -106,6 +117,7 @@ def test_object_list_serialization(number_of_objects, benchmark):
 @pytest.mark.benchmark(
     group="ModelSerializer serialization",
     min_rounds=100,
+    max_time=120,
     warmup=True
 )
 @pytest.mark.django_db
@@ -113,6 +125,7 @@ def test_nested_object_serialization(benchmark):
     nested_instance = RegularFieldsModel(**data)
     nested_instance.save()
     instance = RegularFieldsAndFKModel(fk=nested_instance, **data)
+    instance.save()
     serializer = TestNestedSerializer(instance=instance)
 
     @benchmark
@@ -126,6 +139,7 @@ def test_nested_object_serialization(benchmark):
     group="ModelSerializer serialization",
     min_rounds=1000,
     disable_gc=True,
+    max_time=120,
     warmup=True
 )
 @pytest.mark.parametrize("number_of_objects", range(2, 100))
@@ -133,7 +147,8 @@ def test_nested_object_serialization(benchmark):
 def test_nested_object_list_serialization(number_of_objects, benchmark):
     nested_instance = RegularFieldsModel(**data)
     nested_instance.save()
-    instances_list = [RegularFieldsAndFKModel(fk=nested_instance, **data) for _ in range(number_of_objects)]
+    instances_list = RegularFieldsAndFKModel.objects.bulk_create(
+        [RegularFieldsAndFKModel(fk=nested_instance, **data) for _ in range(number_of_objects)])
     serializer = serializers.ListSerializer(child=TestSerializer(instance=instances_list))
 
     @benchmark

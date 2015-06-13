@@ -5,6 +5,10 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
 def pytest_configure():
+    config_django()
+
+
+def config_django():
     from django.conf import settings
 
     settings.configure(
@@ -42,7 +46,6 @@ def pytest_configure():
             'django.contrib.auth.hashers.MD5PasswordHasher',
         ),
     )
-
     # guardian is optional
     try:
         import guardian  # NOQA
@@ -57,9 +60,9 @@ def pytest_configure():
         settings.INSTALLED_APPS += (
             'guardian',
         )
-
     try:
         import django
+
         django.setup()
     except AttributeError:
         pass
