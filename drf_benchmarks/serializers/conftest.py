@@ -75,8 +75,8 @@ def data_list(number_of_objects, data):
 
 
 @pytest.fixture(scope='session')
-def data_list_with_nesting(number_of_objects, data):
-    return [data for _ in range(number_of_objects)]
+def data_list_with_nesting(number_of_objects, nested_data):
+    return [nested_data for _ in range(number_of_objects)]
 
 
 @pytest.fixture(params=serializers_to_test, ids=serializer_ids)

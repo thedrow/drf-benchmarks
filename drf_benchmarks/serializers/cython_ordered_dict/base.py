@@ -14,18 +14,16 @@ from django.core.validators import ValidationError as DjangoValidationError
 class CythonOrderedDictMixin(object):
     def get_initial(self):
         if hasattr(self, 'initial_data'):
-            return OrderedDict([
-                (field_name, field.get_value(self.initial_data))
-                for field_name, field in self.fields.items()
-                if (field.get_value(self.initial_data) is not empty) and
-                not field.read_only
-            ])
+            return OrderedDict({field_name: field.get_value(self.initial_data)
+                                for field_name, field in self.fields.items()
+                                if (field.get_value(self.initial_data) is not empty) and
+                                not field.read_only
+                                })
 
-        return OrderedDict([
-            (field.field_name, field.get_initial())
-            for field in self.fields.values()
-            if not field.read_only
-        ])
+        return OrderedDict({field.field_name: field.get_initial()
+                            for field in self.fields.values()
+                            if not field.read_only
+                            })
 
     def to_internal_value(self, data):
         """
