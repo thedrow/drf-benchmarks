@@ -2,7 +2,6 @@
 # coding: utf-8
 from datetime import datetime
 from decimal import Decimal
-import gc
 
 import pytest as pytest
 from rest_framework import serializers
@@ -50,6 +49,7 @@ nested_data = {
     'fk': data
 }
 
+
 class TestSerializer(serializers.ModelSerializer):
     class Meta:
         model = RegularFieldsModel
@@ -67,7 +67,7 @@ class TestNestedSerializer(serializers.ModelSerializer):
 @pytest.mark.benchmark(
     group="ModelSerializer deserialization",
     min_rounds=100,
-    max_time=120,
+    max_time=60,
     warmup=True
 )
 @pytest.mark.django_db
@@ -84,11 +84,10 @@ def test_object_deserialization(benchmark):
 @pytest.mark.benchmark(
     group="ModelSerializer deserialization",
     min_rounds=1000,
-    disable_gc=True,
-    max_time=120,
+    max_time=60,
     warmup=True
 )
-@pytest.mark.parametrize("number_of_objects", range(2, 100))
+@pytest.mark.parametrize("number_of_objects", range(2, 10))
 def test_object_list_deserialization(number_of_objects, benchmark):
     data_list = [data for _ in range(number_of_objects)]
     serializer = serializers.ListSerializer(child=TestSerializer(), data=data_list)
@@ -97,15 +96,13 @@ def test_object_list_deserialization(number_of_objects, benchmark):
     def result():
         return serializer.to_internal_value(data_list)
 
-    gc.collect()  # explicitly garbage collect in order to reduce standard deviation
-
     assert result and serializer.is_valid(), serializer.errors
 
 
 @pytest.mark.benchmark(
     group="ModelSerializer deserialization",
     min_rounds=100,
-    max_time=120,
+    max_time=60,
     warmup=True
 )
 @pytest.mark.django_db
@@ -122,11 +119,10 @@ def test_nested_object_deserialization(benchmark):
 @pytest.mark.benchmark(
     group="ModelSerializer deserialization",
     min_rounds=1000,
-    disable_gc=True,
-    max_time=120,
+    max_time=60,
     warmup=True
 )
-@pytest.mark.parametrize("number_of_objects", range(2, 100))
+@pytest.mark.parametrize("number_of_objects", range(2, 10))
 @pytest.mark.django_db
 def test_nested_object_list_deserialization(number_of_objects, benchmark):
     data_list_with_nesting = [nested_data for _ in range(number_of_objects)]
@@ -135,7 +131,5 @@ def test_nested_object_list_deserialization(number_of_objects, benchmark):
     @benchmark
     def result():
         return serializer.to_representation(data_list_with_nesting)
-
-    gc.collect()  # explicitly garbage collect in order to reduce standard deviation
 
     assert result and serializer.is_valid(), serializer.errors

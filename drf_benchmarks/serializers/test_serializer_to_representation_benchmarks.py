@@ -2,7 +2,6 @@
 # coding: utf-8
 from datetime import datetime
 from decimal import Decimal
-import gc
 
 import pytest as pytest
 from rest_framework import serializers
@@ -68,7 +67,7 @@ class TestNestedSerializer(serializers.ModelSerializer):
 @pytest.mark.benchmark(
     group="ModelSerializer serialization",
     min_rounds=100,
-    max_time=120,
+    max_time=60,
     warmup=True
 )
 @pytest.mark.django_db
@@ -88,10 +87,10 @@ def test_object_serialization(benchmark):
     group="ModelSerializer serialization",
     min_rounds=1000,
     disable_gc=True,
-    max_time=120,
     warmup=True
 )
-@pytest.mark.parametrize("number_of_objects", range(2, 100))
+@pytest.mark.parametrize("number_of_objects", range(2, 10))
+@pytest.mark.django_db
 def test_object_list_serialization(number_of_objects, benchmark):
     instances_list = RegularFieldsModel.objects.bulk_create(
         [RegularFieldsModel(**data) for _ in range(number_of_objects)])
@@ -101,15 +100,13 @@ def test_object_list_serialization(number_of_objects, benchmark):
     def result():
         return serializer.to_representation(instances_list)
 
-    gc.collect()  # explicitly garbage collect in order to reduce standard deviation
-
     assert result
 
 
 @pytest.mark.benchmark(
     group="ModelSerializer serialization",
     min_rounds=100,
-    max_time=120,
+    max_time=60,
     warmup=True
 )
 @pytest.mark.django_db
@@ -130,11 +127,10 @@ def test_nested_object_serialization(benchmark):
 @pytest.mark.benchmark(
     group="ModelSerializer serialization",
     min_rounds=1000,
-    disable_gc=True,
-    max_time=120,
+    max_time=60,
     warmup=True
 )
-@pytest.mark.parametrize("number_of_objects", range(2, 100))
+@pytest.mark.parametrize("number_of_objects", range(2, 10))
 @pytest.mark.django_db
 def test_nested_object_list_serialization(number_of_objects, benchmark):
     nested_instance = RegularFieldsModel(**data)
@@ -146,7 +142,5 @@ def test_nested_object_list_serialization(number_of_objects, benchmark):
     @benchmark
     def result():
         return serializer.to_representation(instances_list)
-
-    gc.collect()  # explicitly garbage collect in order to reduce standard deviation
 
     assert result
