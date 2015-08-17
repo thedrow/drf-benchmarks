@@ -7,8 +7,6 @@ from rest_framework import serializers
 
 @pytest.mark.benchmark(
     group="ModelSerializer deserialization",
-    min_rounds=100,
-    max_time=60,
     warmup=True
 )
 @pytest.mark.django_db
@@ -24,8 +22,6 @@ def test_object_deserialization(serializer, data, benchmark):
 
 @pytest.mark.benchmark(
     group="ModelSerializer deserialization",
-    min_rounds=1000,
-    max_time=60,
     warmup=True
 )
 def test_object_list_deserialization(serializer, data_list, benchmark):
@@ -35,13 +31,11 @@ def test_object_list_deserialization(serializer, data_list, benchmark):
     def result():
         return serializer.to_internal_value(data_list)
 
-    assert result and serializer.is_valid(), serializer.errors
+    assert result if data_list else not result and serializer.is_valid(), serializer.errors
 
 
 @pytest.mark.benchmark(
     group="ModelSerializer deserialization",
-    min_rounds=100,
-    max_time=60,
     warmup=True
 )
 @pytest.mark.django_db
@@ -57,11 +51,8 @@ def test_nested_object_deserialization(nested_serializer, nested_data, benchmark
 
 @pytest.mark.benchmark(
     group="ModelSerializer deserialization",
-    min_rounds=1000,
-    max_time=60,
     warmup=True
 )
-@pytest.mark.parametrize("number_of_objects", range(2, 10))
 @pytest.mark.django_db
 def test_nested_object_list_deserialization(nested_serializer, data_list_with_nesting, benchmark):
     serializer = serializers.ListSerializer(child=nested_serializer(), data=data_list_with_nesting)
@@ -70,4 +61,4 @@ def test_nested_object_list_deserialization(nested_serializer, data_list_with_ne
     def result():
         return serializer.to_representation(data_list_with_nesting)
 
-    assert result and serializer.is_valid(), serializer.errors
+    assert result if data_list_with_nesting else not result and serializer.is_valid(), serializer.errors

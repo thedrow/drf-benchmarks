@@ -7,8 +7,6 @@ from rest_framework import serializers
 
 @pytest.mark.benchmark(
     group="ModelSerializer serialization",
-    min_rounds=100,
-    max_time=60,
     warmup=True
 )
 @pytest.mark.django_db
@@ -24,8 +22,6 @@ def test_object_serialization(instance, seriaizer, benchmark):
 
 @pytest.mark.benchmark(
     group="ModelSerializer serialization",
-    min_rounds=1000,
-    disable_gc=True,
     warmup=True
 )
 @pytest.mark.django_db
@@ -36,13 +32,11 @@ def test_object_list_serialization(instances_list, serializer, benchmark):
     def result():
         return serializer.to_representation(instances_list)
 
-    assert result
+    assert result if instances_list else not result
 
 
 @pytest.mark.benchmark(
     group="ModelSerializer serialization",
-    min_rounds=100,
-    max_time=60,
     warmup=True
 )
 @pytest.mark.django_db
@@ -58,8 +52,6 @@ def test_nested_object_serialization(nested_instance, nested_serializer, benchma
 
 @pytest.mark.benchmark(
     group="ModelSerializer serialization",
-    min_rounds=1000,
-    max_time=60,
     warmup=True
 )
 @pytest.mark.django_db
@@ -70,4 +62,4 @@ def test_nested_object_list_serialization(nested_instances_list, nested_serializ
     def result():
         return serializer.to_representation(nested_instances_list)
 
-    assert result
+    assert result if nested_instances_list else not result
