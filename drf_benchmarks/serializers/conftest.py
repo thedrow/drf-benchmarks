@@ -57,7 +57,10 @@ def nested_data(data):
     }
 
 
-@pytest.fixture(scope='session', params=range(1, 10), ids=[' %d objects' if n > 1 else ' %d object' % n for n in range(1, 10)])
+ranges = range(1, 10)
+
+
+@pytest.fixture(scope='session', params=ranges, ids=['%d objects' if n > 1 else ' %d object' % n for n in ranges])
 def number_of_objects(request):
     return request.param
 
