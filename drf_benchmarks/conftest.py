@@ -4,12 +4,15 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+
 def pytest_configure():
     config_django()
 
 
 def config_django():
     from django.conf import settings
+    if settings.configured:
+        return
 
     settings.configure(
         DEBUG_PROPAGATE_EXCEPTIONS=True,

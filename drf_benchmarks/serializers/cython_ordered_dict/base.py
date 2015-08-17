@@ -1,10 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+import copy
 
+from rest_framework.exceptions import ValidationError
+from rest_framework.fields import SkipField, set_value, empty
+from rest_framework.settings import api_settings
+from cyordereddict import OrderedDict
 from rest_framework.utils import model_meta
-from cyordereddict import *
-
+from django.core.validators import ValidationError as DjangoValidationError
 
 
 class CythonOrderedDictMixin(object):
