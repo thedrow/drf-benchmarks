@@ -1,0 +1,4 @@
+pytest>=2.7.1
+pytest-benchmark>=2.4.1
+pytest-django>=2.8.0
+cyordereddict>=0.2.2
