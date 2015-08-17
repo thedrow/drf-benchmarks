@@ -7,7 +7,7 @@ import pytest
     group="ModelSerializer get_fields",
     warmup=True
 )
-def test_serializer_initialization(serializer, data, benchmark):
+def test_serializer_get_field(serializer, data, benchmark):
     serializer = serializer(data=data)
 
     @benchmark
@@ -19,7 +19,7 @@ def test_serializer_initialization(serializer, data, benchmark):
     group="ModelSerializer get_fields",
     warmup=True
 )
-def test_nested_serializer_initialization(nested_serializer, nested_data, benchmark):
+def test_nested_serializer_get_fields(nested_serializer, nested_data, benchmark):
     serializer = nested_serializer(data=nested_data)
 
     @benchmark
