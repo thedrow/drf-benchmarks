@@ -66,7 +66,7 @@ class TestNestedSerializer(serializers.ModelSerializer, CythonOrderedDictMixin):
 
 
 @pytest.mark.benchmark(
-    group="ModelSerializer serialization",
+    group="ModelSerializer serialization with cythonized ordered dictionary",
     min_rounds=100,
     max_time=60,
     warmup=True
@@ -85,7 +85,7 @@ def test_object_serialization(benchmark):
 
 
 @pytest.mark.benchmark(
-    group="ModelSerializer serialization",
+    group="ModelSerializer serialization with cythonized ordered dictionary",
     min_rounds=1000,
     disable_gc=True,
     warmup=True
@@ -105,7 +105,7 @@ def test_object_list_serialization(number_of_objects, benchmark):
 
 
 @pytest.mark.benchmark(
-    group="ModelSerializer serialization",
+    group="ModelSerializer serialization with cythonized ordered dictionary",
     min_rounds=100,
     max_time=60,
     warmup=True
@@ -126,7 +126,7 @@ def test_nested_object_serialization(benchmark):
 
 
 @pytest.mark.benchmark(
-    group="ModelSerializer serialization",
+    group="ModelSerializer serialization with cythonized ordered dictionary",
     min_rounds=1000,
     max_time=60,
     warmup=True
