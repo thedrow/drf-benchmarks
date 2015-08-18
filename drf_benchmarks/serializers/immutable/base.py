@@ -20,7 +20,7 @@ from rest_framework.utils import model_meta
 from drf_benchmarks.serializers.immutable.fields import *
 
 
-class ImmutableModelSerializer(ModelSerializer):
+class ImmutableModelSerializer(ImmutableFieldMixin, ModelSerializer):
     serializer_field_mapping = {
         models.AutoField: ImmutableIntegerField,
         models.BigIntegerField: ImmutableIntegerField,
