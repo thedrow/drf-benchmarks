@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from collections import defaultdict
 from datetime import datetime
 from decimal import Decimal
 
@@ -107,3 +108,16 @@ def nested_instance(instance, data):
 @pytest.fixture(scope='session')
 def nested_instances_list(data_list, instance):
     return RegularFieldsAndFKModel.objects.bulk_create([RegularFieldsAndFKModel(fk=instance, **d) for d in data_list])
+
+
+def pytest_benchmark_group_stats(config, benchmarks, group_by):
+    groups = defaultdict(list)
+    for bench in benchmarks:
+        group_name = bench.group
+        param = bench.param
+        if 'object' in param:
+            group_name += ': ' + param.split(' - ')[1]
+        else:
+            group_name += ': ' + param
+        groups[group_name].append(bench)
+    return sorted(groups.items(), key=lambda pair: pair[0] or "")
