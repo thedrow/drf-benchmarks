@@ -12,6 +12,7 @@ class ImmutableFieldMixin(object):
         if self.is_bound:
             return
         super(ImmutableFieldMixin, self).bind(field_name, parent)
+        self.is_bound = True
 
 
 class ImmutableIntegerField(ImmutableFieldMixin, serializers.IntegerField):
