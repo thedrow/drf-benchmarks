@@ -38,7 +38,7 @@ def test_list_serializer_initialization(serializer, data_list, benchmark):
     group="ModelSerializer initialization",
     warmup=True
 )
-def test_nested_list_serializer_initialization(nested_serializer, nested_data_list, benchmark):
+def test_nested_list_serializer_initialization(nested_serializer, data_list_with_nesting, benchmark):
     @benchmark
     def result():
-        return serializers.ListSerializer(child=nested_serializer(), data=nested_data_list)
+        return serializers.ListSerializer(child=nested_serializer(), data=data_list_with_nesting)
