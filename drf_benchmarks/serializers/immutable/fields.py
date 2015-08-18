@@ -70,8 +70,12 @@ class ImmutableURLField(ImmutableFieldMixin, serializers.URLField):
     pass
 
 
-class ImmutableIPAddressField(ImmutableFieldMixin, serializers.IPAddressField):
-    pass
+try:
+    class ImmutableIPAddressField(ImmutableFieldMixin, serializers.IPAddressField):
+        pass
+except AttributeError:
+    class ImmutableIPAddressField(ImmutableFieldMixin, serializers.CharField):
+        pass
 
 
 class ImmutableFilePathField(ImmutableFieldMixin, serializers.FilePathField):
