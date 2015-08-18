@@ -77,6 +77,9 @@ except AttributeError:
     class ImmutableIPAddressField(ImmutableFieldMixin, serializers.CharField):
         pass
 
-
-class ImmutableFilePathField(ImmutableFieldMixin, serializers.FilePathField):
-    pass
+try:
+    class ImmutableFilePathField(ImmutableFieldMixin, serializers.FilePathField):
+        pass
+except AttributeError:
+    class ImmutableFilePathField(ImmutableFieldMixin, serializers.CharField):
+        pass
