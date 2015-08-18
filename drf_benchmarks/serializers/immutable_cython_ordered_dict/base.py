@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.db import models
 from rest_framework.exceptions import ValidationError
 from rest_framework.fields import SkipField, set_value, empty
 from rest_framework.settings import api_settings
@@ -9,8 +10,36 @@ from cyordereddict import OrderedDict
 from rest_framework.utils import model_meta
 from django.core.validators import ValidationError as DjangoValidationError
 
+from drf_benchmarks.serializers.immutable.fields import *
+
 
 class ImmutableCythonOrderedDictMixin(object):
+    serializer_field_mapping = {
+        models.AutoField: ImmutableIntegerField,
+        models.BigIntegerField: ImmutableIntegerField,
+        models.BooleanField: ImmutableBooleanField,
+        models.CharField: ImmutableCharField,
+        models.CommaSeparatedIntegerField: ImmutableCharField,
+        models.DateField: ImmutableDateField,
+        models.DateTimeField: ImmutableDateTimeField,
+        models.DecimalField: ImmutableDecimalField,
+        models.EmailField: ImmutableEmailField,
+        models.FileField: ImmutableFileField,
+        models.FloatField: ImmutableFloatField,
+        models.ImageField: ImmutableImageField,
+        models.IntegerField: ImmutableIntegerField,
+        models.NullBooleanField: ImmutableNullBooleanField,
+        models.PositiveIntegerField: ImmutableIntegerField,
+        models.PositiveSmallIntegerField: ImmutableIntegerField,
+        models.SlugField: ImmutableSlugField,
+        models.SmallIntegerField: ImmutableIntegerField,
+        models.TextField: ImmutableCharField,
+        models.TimeField: ImmutableTimeField,
+        models.URLField: ImmutableURLField,
+        models.GenericIPAddressField: ImmutableIPAddressField,
+        models.FilePathField: ImmutableFilePathField,
+    }
+
     def get_initial(self):
         if hasattr(self, 'initial_data'):
             return OrderedDict([(field_name, field.get_value(self.initial_data))
