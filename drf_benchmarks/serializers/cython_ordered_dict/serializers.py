@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import inspect
 
-from cyordereddict._cyordereddict import OrderedDict
+from cyordereddict import OrderedDict
 
 from rest_framework import serializers
 

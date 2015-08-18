@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import inspect
 
-from cyordereddict._cyordereddict import OrderedDict
+from cyordereddict import OrderedDict
 
 from drf_benchmarks import test_serializer_fields, test_nested_serializer_fields
 from drf_benchmarks.models import RegularFieldsModel, RegularFieldsAndFKModel
