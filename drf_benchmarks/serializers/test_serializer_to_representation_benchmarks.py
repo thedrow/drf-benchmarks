@@ -10,8 +10,8 @@ from rest_framework import serializers
     warmup=True
 )
 @pytest.mark.django_db
-def test_object_serialization(instance, seriaizer, benchmark):
-    serializer = seriaizer(instance=instance)
+def test_object_serialization(instance, serializer, benchmark):
+    serializer = serializer(instance=instance)
 
     @benchmark
     def result():
