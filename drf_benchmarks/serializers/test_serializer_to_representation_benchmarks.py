@@ -10,8 +10,8 @@ from rest_framework import serializers
     warmup=True
 )
 @pytest.mark.django_db
-def test_object_serialization(instance, serializer, benchmark):
-    serializer = serializer(instance=instance)
+def test_object_serialization(instance, serializer_class, benchmark):
+    serializer = serializer_class(instance=instance)
 
     @benchmark
     def result():
@@ -25,8 +25,8 @@ def test_object_serialization(instance, serializer, benchmark):
     warmup=True
 )
 @pytest.mark.django_db
-def test_object_list_serialization(instances_list, serializer, benchmark):
-    serializer = serializers.ListSerializer(child=serializer(instance=instances_list))
+def test_object_list_serialization(instances_list, serializer_class, benchmark):
+    serializer = serializers.ListSerializer(child=serializer_class(instance=instances_list))
 
     @benchmark
     def result():
@@ -40,8 +40,8 @@ def test_object_list_serialization(instances_list, serializer, benchmark):
     warmup=True
 )
 @pytest.mark.django_db
-def test_nested_object_serialization(nested_instance, nested_serializer, benchmark):
-    serializer = nested_serializer(instance=nested_instance)
+def test_nested_object_serialization(nested_instance, nested_serializer_class, benchmark):
+    serializer = nested_serializer_class(instance=nested_instance)
 
     @benchmark
     def result():
@@ -55,8 +55,8 @@ def test_nested_object_serialization(nested_instance, nested_serializer, benchma
     warmup=True
 )
 @pytest.mark.django_db
-def test_nested_object_list_serialization(nested_instances_list, nested_serializer, benchmark):
-    serializer = serializers.ListSerializer(child=nested_serializer(instance=nested_instances_list))
+def test_nested_object_list_serialization(nested_instances_list, nested_serializer_class, benchmark):
+    serializer = serializers.ListSerializer(child=nested_serializer_class(instance=nested_instances_list))
 
     @benchmark
     def result():

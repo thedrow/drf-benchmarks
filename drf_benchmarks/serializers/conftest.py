@@ -80,12 +80,12 @@ def data_list_with_nesting(number_of_objects, nested_data):
 
 
 @pytest.fixture(params=serializers_to_test, ids=serializer_ids)
-def serializer(request):
+def serializer_class(request):
     return request.param
 
 
 @pytest.fixture(params=nested_serializers_to_test, ids=nested_serializer_ids)
-def nested_serializer(request):
+def nested_serializer_class(request):
     return request.param
 
 
