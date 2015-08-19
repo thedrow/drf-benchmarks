@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
-from line_profiler import LineProfiler
+try:
+    from line_profiler import LineProfiler
+except ImportError:
+    LineProfiler = None
 import os
 
 import pytest as pytest
@@ -8,7 +11,7 @@ from rest_framework import serializers
 
 
 def profile_list_serialization(serializer, child_serializer, instances_list):
-    if os.environ.get('CI', None) != 'true':
+    if os.environ.get('CI', None) != 'true' or not LineProfiler:
         return
     profile = LineProfiler(serializer.instances_list, child_serializer.instances_list)
     profile.enable()

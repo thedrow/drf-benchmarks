@@ -24,7 +24,9 @@ class TestNestedSerializer(serializers.ModelSerializer):
 
 # Inject the dict to all methods
 for f in inspect.getmembers(TestSerializer, lambda m: inspect.ismethod(m)):
-    f[1].im_func.func_globals['OrderedDict'] = dict
+    if f[1].im_func.func_globals:
+        f[1].im_func.func_globals['OrderedDict'] = dict
 
 for f in inspect.getmembers(TestNestedSerializer, lambda m: inspect.ismethod(m)):
-    f[1].im_func.func_globals['OrderedDict'] = dict
+    if f[1].im_func.func_globals:
+        f[1].im_func.func_globals['OrderedDict'] = dict
