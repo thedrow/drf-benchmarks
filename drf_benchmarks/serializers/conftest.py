@@ -117,7 +117,5 @@ def pytest_benchmark_group_stats(config, benchmarks, group_by):
         param = bench.param
         if 'object' in param:
             group_name += ': ' + param.split(' - ')[1]
-        else:
-            group_name += ': ' + param
         groups[group_name].append(bench)
     return sorted(groups.items(), key=lambda pair: pair[0] or "")

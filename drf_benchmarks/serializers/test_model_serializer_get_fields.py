@@ -28,7 +28,7 @@ def test_nested_serializer_get_fields(nested_serializer_class, nested_data, benc
 
 
 @pytest.mark.benchmark(
-    group="ModelSerializer get_fields",
+    group="ModelSerializer get_fields twice",
     warmup=True
 )
 def test_serializer_get_fields_twice(serializer_class, data, benchmark):
@@ -41,7 +41,7 @@ def test_serializer_get_fields_twice(serializer_class, data, benchmark):
 
 
 @pytest.mark.benchmark(
-    group="ModelSerializer get_fields",
+    group="ModelSerializer get_fields twice",
     warmup=True
 )
 def test_nested_serializer_get_fields_twice(nested_serializer_class, nested_data, benchmark):
